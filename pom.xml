@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.ipampas</groupId>
+    <artifactId>example</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <spring-boot.version>2.0.4.RELEASE</spring-boot.version>
+        <pampas-framework.version>2.0.5</pampas-framework.version>
+    </properties>
+
+    <dependencies>
+        <!-- pampas framework -->
+        <dependency>
+            <groupId>com.ipampas.spring.boot</groupId>
+            <artifactId>pampas-boot-starter-jsonrpc</artifactId>
+            <version>${pampas-framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ipampas.spring.boot</groupId>
+            <artifactId>pampas-boot-starter-openapi</artifactId>
+            <version>${pampas-framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ipampas.spring.boot</groupId>
+            <artifactId>pampas-boot-starter-mybatis</artifactId>
+            <version>${pampas-framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ipampas.spring.boot</groupId>
+            <artifactId>pampas-boot-starter-aliyun</artifactId>
+            <version>${pampas-framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ipampas.spring.boot</groupId>
+            <artifactId>pampas-boot-starter-redisson</artifactId>
+            <version>${pampas-framework.version}</version>
+        </dependency>
+        <!-- spring boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+        <!-- alibaba -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.37</version>
+        </dependency>
+    </dependencies>
+</project>
