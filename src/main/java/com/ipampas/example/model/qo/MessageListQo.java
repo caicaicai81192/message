@@ -17,4 +17,11 @@ import lombok.*;
 public class MessageListQo {
 
     private Boolean isDeleted;
+
+    /**
+     * 状态
+     *
+     * @see com.ipampas.example.enums.MessageStatusEnum
+     */
+    private String status;
 }

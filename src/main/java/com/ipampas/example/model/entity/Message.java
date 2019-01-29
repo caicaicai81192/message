@@ -74,6 +74,11 @@ public class Message {
     private String operateId;
 
     /**
+     * 失败原因
+     */
+    private String sendFailReason;
+
+    /**
      * 扩展字段
      */
     private String extension;

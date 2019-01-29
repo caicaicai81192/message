@@ -16,4 +16,9 @@ public interface MessageService {
      * @param messageDto
      */
     void send(MessageDto messageDto);
+
+    /**
+     * 定时任务事实发送信息
+     */
+    void sendMessageTask();
 }
