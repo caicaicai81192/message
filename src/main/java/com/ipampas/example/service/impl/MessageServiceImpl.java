@@ -96,13 +96,13 @@ public class MessageServiceImpl implements MessageService {
             //
             switch (MessageTypeEnum.getMessageTypeEnumByCode(message.getType())) {
                 case SHORT_MESSAGE:
-                    //发送短信
+                    sendShortMessage(message);
                     break;
                 case MAIL:
                     sendMail(message);
                     break;
                 case WECHAT_NOTICE:
-                    //发送微信通知
+                    sendWeChatNotice(message);
                     break;
                 default:
                     log.info("不支持的消息类型：【{}】", message.getType());
@@ -112,6 +112,22 @@ public class MessageServiceImpl implements MessageService {
             messageManager.modify(modify);
         });
 
+    }
+
+    /**
+     * 发送微信通知
+     *
+     * @param message
+     */
+    private void sendWeChatNotice(Message message) {
+    }
+
+    /**
+     * 发送短信
+     *
+     * @param message
+     */
+    private void sendShortMessage(Message message) {
     }
 
     /**
