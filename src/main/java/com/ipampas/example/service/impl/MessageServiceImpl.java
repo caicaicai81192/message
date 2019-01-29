@@ -11,7 +11,6 @@ import com.ipampas.example.model.entity.MessageTemplate;
 import com.ipampas.example.model.qo.MessageListQo;
 import com.ipampas.example.service.MessageService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -23,7 +22,7 @@ import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author caizj
@@ -44,28 +43,13 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public void send(MessageDto messageDto) {
         //
-        if (Objects.isNull(messageDto)) {
-            log.error("messageDto is null");
-            return;
-        }
-        if (Objects.isNull(messageDto.getMessageTypeEnum())) {
-            log.error("type is null");
-            return;
-        }
-        if (CollectionUtils.isEmpty(messageDto.getTargetList())) {
-            log.error("targetList is null");
-            return;
-        }
-        if (StringUtils.isBlank(messageDto.getTemplate())) {
-            log.error("template is null");
-            return;
-        }
-        if (Objects.isNull(messageDto.getSendTime())) {
-            messageDto.setSendTime(new Date());
-        }
+        Assert.notNull(messageDto, "messageDto must not be null");
+        Assert.notNull(messageDto.getMessageTypeEnum(), "type must not be null");
+        Assert.notEmpty(messageDto.getTargetList(), "targetList must not be empty");
+        Assert.hasText(messageDto.getTemplate(), "template must not be null or empty");
         //
         MessageTemplate messageTemplate = messageTemplateManager.findMessageTemplateByCode(messageDto.getTemplate());
-        Assert.notNull(messageTemplate, "messageTemplate is null");
+        Assert.notNull(messageTemplate, "messageTemplate must not be null");
         //
         String content = messageTemplateManager.render(messageTemplate.getContent(), messageDto.getParam());
         //
@@ -75,6 +59,8 @@ public class MessageServiceImpl implements MessageService {
         message.setContent(content);
         message.setStatus(MessageStatusEnum.UNSENT.getCode());
         message.setType(messageDto.getMessageTypeEnum().getCode());
+        message.setSendTime(Optional.ofNullable(messageDto.getSendTime()).orElse(new Date()));
+        //
         messageManager.create(message);
 
     }
