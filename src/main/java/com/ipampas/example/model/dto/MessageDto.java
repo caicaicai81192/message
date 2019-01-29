@@ -1,5 +1,6 @@
 package com.ipampas.example.model.dto;
 
+import com.ipampas.example.enums.MessageTypeEnum;
 import com.ipampas.example.model.entity.Message;
 import lombok.*;
 
@@ -21,4 +22,6 @@ public class MessageDto extends Message {
     private Map<String, Object> param;
 
     private List<String> targetList;
+
+    private MessageTypeEnum messageTypeEnum;
 }

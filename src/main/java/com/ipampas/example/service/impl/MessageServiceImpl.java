@@ -48,7 +48,7 @@ public class MessageServiceImpl implements MessageService {
             log.error("messageDto is null");
             return;
         }
-        if (StringUtils.isBlank(messageDto.getType())) {
+        if (Objects.isNull(messageDto.getMessageTypeEnum())) {
             log.error("type is null");
             return;
         }
@@ -74,6 +74,7 @@ public class MessageServiceImpl implements MessageService {
         message.setTargets(JSON.toJSONString(messageDto.getTargetList()));
         message.setContent(content);
         message.setStatus(MessageStatusEnum.UNSENT.getCode());
+        message.setType(messageDto.getMessageTypeEnum().getCode());
         messageManager.create(message);
 
     }
