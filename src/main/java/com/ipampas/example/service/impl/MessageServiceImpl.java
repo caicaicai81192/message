@@ -36,19 +36,19 @@ public class MessageServiceImpl implements MessageService {
     public void send(MessageDto messageDto) {
         //
         if (Objects.isNull(messageDto)) {
-            log.info("messageDto is null");
+            log.error("messageDto is null");
             return;
         }
         if (StringUtils.isBlank(messageDto.getType())) {
-            log.info("type is null");
+            log.error("type is null");
             return;
         }
         if (CollectionUtils.isEmpty(messageDto.getTargetList())) {
-            log.info("targetList is null");
+            log.error("targetList is null");
             return;
         }
         if (StringUtils.isBlank(messageDto.getTemplate())) {
-            log.info("template is null");
+            log.error("template is null");
             return;
         }
         if (Objects.isNull(messageDto.getSendTime())) {
