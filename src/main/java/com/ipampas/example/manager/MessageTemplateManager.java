@@ -14,8 +14,21 @@ import java.util.Map;
 public interface MessageTemplateManager {
 
 
+    /**
+     * 根据code查询模版
+     *
+     * @param code
+     * @return
+     */
     MessageTemplate findMessageTemplateByCode(String code);
 
+    /**
+     * 渲染模版
+     *
+     * @param messageTemplateContent
+     * @param param
+     * @return
+     */
     String render(String messageTemplateContent, Map<String, Object> param);
 
 }
