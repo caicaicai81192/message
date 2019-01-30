@@ -17,6 +17,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
@@ -67,18 +68,13 @@ public class MessageServiceImpl implements MessageService {
             return sendMessageResponse;
         }
         //
-        MessageTemplate messageTemplate = messageTemplateManager.findMessageTemplateByCode(messageDto.getTemplate());
-        if (Objects.isNull(messageTemplate)) {
-            sendMessageResponse.setErrorNo(1);
-            sendMessageResponse.setErrorInfo("messageTemplate must not be null");
-            return sendMessageResponse;
-        }
-        //
         String content;
-        if (messageTemplate.getNeedRender()) {
-            content = messageTemplateManager.render(messageTemplate.getContent(), messageDto.getParam());
-        } else {
-            content = JSON.toJSONString(messageDto.getParam());
+        try {
+            content = this.createMessageContent(messageDto);
+        } catch (Exception e) {
+            sendMessageResponse.setErrorNo(1);
+            sendMessageResponse.setErrorInfo(e.getMessage());
+            return sendMessageResponse;
         }
         //
         Message message = new Message();
@@ -163,5 +159,25 @@ public class MessageServiceImpl implements MessageService {
             message.setSendFailReason(e.getMessage());
             message.setStatus(MessageStatusEnum.FAIL.getCode());
         }
+    }
+
+    /**
+     * 渲染内容
+     *
+     * @param messageDto
+     * @return
+     */
+    private String createMessageContent(MessageDto messageDto) {
+        //
+        MessageTemplate messageTemplate = messageTemplateManager.findMessageTemplateByCode(messageDto.getTemplate());
+        Assert.notNull(messageTemplate, "messageTemplate must not be null");
+        //
+        String content;
+        if (messageTemplate.getNeedRender()) {
+            content = messageTemplateManager.render(messageTemplate.getContent(), messageDto.getParam());
+        } else {
+            content = JSON.toJSONString(messageDto.getParam());
+        }
+        return content;
     }
 }
