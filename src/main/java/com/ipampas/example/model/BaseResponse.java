@@ -63,21 +63,13 @@ public class BaseResponse {
     }
 
     /**
-     * 判断是否成
+     * 判断是否成功
      *
-     * @return true-失败 false-成功
+     * @return true-成功 false-失败
      */
     public Boolean isSuccess() {
-        return !isError();
+        return getErrorNo() == 0;
     }
 
-    /**
-     * 是否失败
-     *
-     * @return true-失败 false-成功
-     */
-    public Boolean isError() {
-        return getErrorNo() != 0;
-    }
 
 }
