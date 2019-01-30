@@ -42,6 +42,11 @@ public class MessageTemplate {
      */
     private String content;
 
+    /**
+     * 是否需要渲染
+     */
+    private Boolean needRender;
+
     private Boolean isDeleted;
 
     private Date createdAt;

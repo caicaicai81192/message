@@ -51,7 +51,12 @@ public class MessageServiceImpl implements MessageService {
         MessageTemplate messageTemplate = messageTemplateManager.findMessageTemplateByCode(messageDto.getTemplate());
         Assert.notNull(messageTemplate, "messageTemplate must not be null");
         //
-        String content = messageTemplateManager.render(messageTemplate.getContent(), messageDto.getParam());
+        String content;
+        if (messageTemplate.getNeedRender()) {
+            content = messageTemplateManager.render(messageTemplate.getContent(), messageDto.getParam());
+        } else {
+            content = JSON.toJSONString(messageDto.getParam());
+        }
         //
         Message message = new Message();
         BeanUtils.copyProperties(messageDto, message);
