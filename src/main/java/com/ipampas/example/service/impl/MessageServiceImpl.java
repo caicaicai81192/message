@@ -81,10 +81,10 @@ public class MessageServiceImpl implements MessageService {
         }
         messages.forEach(message -> {
             //
-            Message modify = new Message();
-            modify.setId(message.getId());
-            modify.setStatus(MessageStatusEnum.SENDING.getCode());
-            messageManager.modify(modify);
+            Message modifyMessage = new Message();
+            modifyMessage.setId(message.getId());
+            modifyMessage.setStatus(MessageStatusEnum.SENDING.getCode());
+            messageManager.modify(modifyMessage);
             //
             switch (MessageTypeEnum.getMessageTypeEnumByCode(message.getType())) {
                 case SHORT_MESSAGE:
@@ -101,7 +101,9 @@ public class MessageServiceImpl implements MessageService {
                     break;
             }
             //
-            messageManager.modify(modify);
+            modifyMessage.setStatus(message.getStatus());
+            modifyMessage.setSendFailReason(message.getSendFailReason());
+            messageManager.modify(modifyMessage);
         });
 
     }
