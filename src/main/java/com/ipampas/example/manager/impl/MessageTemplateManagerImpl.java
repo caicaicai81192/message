@@ -34,7 +34,7 @@ public class MessageTemplateManagerImpl implements MessageTemplateManager {
     @Override
     public String render(String messageTemplateContent, Map<String, Object> param) {
         //
-        Assert.notNull(messageTemplateContent, "template不能为空");
+        Assert.hasText(messageTemplateContent, "messageTemplateContent must not be null or empty");
         //
         ByteArrayResource byteArrayResource = new ByteArrayResource(messageTemplateContent.getBytes());
         SpelTemplate spelTemplate = new SpelTemplate(byteArrayResource);

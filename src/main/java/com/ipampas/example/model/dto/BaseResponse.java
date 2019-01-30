@@ -1,4 +1,4 @@
-package com.ipampas.example.model;
+package com.ipampas.example.model.dto;
 
 import org.apache.commons.lang.StringUtils;
 

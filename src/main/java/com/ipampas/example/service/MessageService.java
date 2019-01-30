@@ -1,6 +1,7 @@
 package com.ipampas.example.service;
 
 import com.ipampas.example.model.dto.MessageDto;
+import com.ipampas.example.model.dto.response.SendMessageResponse;
 
 /**
  * @author caizj
@@ -15,7 +16,7 @@ public interface MessageService {
      *
      * @param messageDto
      */
-    void send(MessageDto messageDto);
+    SendMessageResponse send(MessageDto messageDto);
 
     /**
      * 定时任务事实发送信息

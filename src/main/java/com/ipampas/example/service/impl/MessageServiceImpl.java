@@ -6,22 +6,24 @@ import com.ipampas.example.enums.MessageTypeEnum;
 import com.ipampas.example.manager.MessageManager;
 import com.ipampas.example.manager.MessageTemplateManager;
 import com.ipampas.example.model.dto.MessageDto;
+import com.ipampas.example.model.dto.response.SendMessageResponse;
 import com.ipampas.example.model.entity.Message;
 import com.ipampas.example.model.entity.MessageTemplate;
 import com.ipampas.example.model.qo.MessageListQo;
 import com.ipampas.example.service.MessageService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -41,15 +43,36 @@ public class MessageServiceImpl implements MessageService {
     private JavaMailSender javaMailSender;
 
     @Override
-    public void send(MessageDto messageDto) {
+    public SendMessageResponse send(MessageDto messageDto) {
+        SendMessageResponse sendMessageResponse = new SendMessageResponse();
         //
-        Assert.notNull(messageDto, "messageDto must not be null");
-        Assert.notNull(messageDto.getMessageTypeEnum(), "type must not be null");
-        Assert.notEmpty(messageDto.getTargetList(), "targetList must not be empty");
-        Assert.hasText(messageDto.getTemplate(), "template must not be null or empty");
+        if (Objects.isNull(messageDto)) {
+            sendMessageResponse.setErrorNo(1);
+            sendMessageResponse.setErrorInfo("messageDto must not be null");
+            return sendMessageResponse;
+        }
+        if (Objects.isNull(messageDto.getMessageTypeEnum())) {
+            sendMessageResponse.setErrorNo(1);
+            sendMessageResponse.setErrorInfo("type must not be null");
+            return sendMessageResponse;
+        }
+        if (CollectionUtils.isEmpty(messageDto.getTargetList())) {
+            sendMessageResponse.setErrorNo(1);
+            sendMessageResponse.setErrorInfo("targetList must not be empty");
+            return sendMessageResponse;
+        }
+        if (StringUtils.isBlank(messageDto.getTemplate())) {
+            sendMessageResponse.setErrorNo(1);
+            sendMessageResponse.setErrorInfo("template must not be null or empty");
+            return sendMessageResponse;
+        }
         //
         MessageTemplate messageTemplate = messageTemplateManager.findMessageTemplateByCode(messageDto.getTemplate());
-        Assert.notNull(messageTemplate, "messageTemplate must not be null");
+        if (Objects.isNull(messageTemplate)) {
+            sendMessageResponse.setErrorNo(1);
+            sendMessageResponse.setErrorInfo("messageTemplate must not be null");
+            return sendMessageResponse;
+        }
         //
         String content;
         if (messageTemplate.getNeedRender()) {
@@ -67,7 +90,8 @@ public class MessageServiceImpl implements MessageService {
         message.setSendTime(Optional.ofNullable(messageDto.getSendTime()).orElse(new Date()));
         //
         messageManager.create(message);
-
+        //
+        return sendMessageResponse;
     }
 
     @Override
