@@ -5,6 +5,7 @@ import org.apache.commons.lang.StringUtils;
 /**
  * @author caizj
  * @version V1.0
+ * @Description: rpc接口和service推荐用Resp返回对象
  * @date 2019/1/30 2:32 PM
  */
 public class BaseResponse {
