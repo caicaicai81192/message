@@ -1,7 +1,7 @@
 package com.ipampas.example.model.dto;
 
 import com.ipampas.example.enums.MessageTypeEnum;
-import com.ipampas.example.model.entity.Message;
+import com.ipampas.example.dao.entity.Message;
 import lombok.*;
 
 import java.util.List;

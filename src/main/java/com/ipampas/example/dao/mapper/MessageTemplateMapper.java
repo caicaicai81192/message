@@ -1,6 +1,6 @@
 package com.ipampas.example.dao.mapper;
 
-import com.ipampas.example.model.entity.MessageTemplate;
+import com.ipampas.example.dao.entity.MessageTemplate;
 import com.ipampas.framework.mybatis.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

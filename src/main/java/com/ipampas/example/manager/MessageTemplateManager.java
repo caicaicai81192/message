@@ -1,7 +1,7 @@
 package com.ipampas.example.manager;
 
 
-import com.ipampas.example.model.entity.MessageTemplate;
+import com.ipampas.example.dao.entity.MessageTemplate;
 
 import java.util.Map;
 

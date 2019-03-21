@@ -3,7 +3,7 @@ package com.ipampas.example.manager.impl;
 
 import com.ipampas.example.dao.mapper.MessageTemplateMapper;
 import com.ipampas.example.manager.MessageTemplateManager;
-import com.ipampas.example.model.entity.MessageTemplate;
+import com.ipampas.example.dao.entity.MessageTemplate;
 import com.ipampas.framework.mybatis.builder.OrderBy;
 import com.ipampas.framework.support.template.string.SpelTemplate;
 import lombok.extern.slf4j.Slf4j;

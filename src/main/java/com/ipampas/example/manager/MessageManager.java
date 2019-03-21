@@ -1,6 +1,6 @@
 package com.ipampas.example.manager;
 
-import com.ipampas.example.model.entity.Message;
+import com.ipampas.example.dao.entity.Message;
 import com.ipampas.example.model.qo.MessageListQo;
 import com.ipampas.example.model.qo.MessagePageListQo;
 import com.ipampas.framework.model.Page;

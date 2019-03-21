@@ -3,7 +3,7 @@ package com.ipampas.example.manager.impl;
 import com.github.pagehelper.PageHelper;
 import com.ipampas.example.dao.mapper.MessageMapper;
 import com.ipampas.example.manager.MessageManager;
-import com.ipampas.example.model.entity.Message;
+import com.ipampas.example.dao.entity.Message;
 import com.ipampas.example.model.qo.MessageListQo;
 import com.ipampas.example.model.qo.MessagePageListQo;
 import com.ipampas.example.util.PageUtils;

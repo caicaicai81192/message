@@ -1,4 +1,4 @@
-package com.ipampas.example.model.entity;
+package com.ipampas.example.dao.entity;
 
 
 import lombok.*;
