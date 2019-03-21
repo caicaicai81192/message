@@ -1,4 +1,4 @@
-package com.ipampas.example.model.dto;
+package com.ipampas.example.service.message.dto;
 
 import com.ipampas.example.enums.MessageTypeEnum;
 import com.ipampas.example.dao.entity.Message;

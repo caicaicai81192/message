@@ -1,4 +1,4 @@
-package com.ipampas.example.model.vo;
+package com.ipampas.example.service.message.vo;
 
 /**
  * @author caizj

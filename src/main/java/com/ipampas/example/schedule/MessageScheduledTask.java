@@ -1,6 +1,6 @@
 package com.ipampas.example.schedule;
 
-import com.ipampas.example.service.MessageService;
+import com.ipampas.example.service.message.MessageService;
 import com.ipampas.framework.redisson.annotation.DistributedLock;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;

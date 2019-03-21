@@ -1,7 +1,6 @@
-package com.ipampas.example.service;
+package com.ipampas.example.service.message;
 
-import com.ipampas.example.model.dto.MessageDto;
-import com.ipampas.example.model.dto.response.SendMessageResponse;
+import com.ipampas.example.service.message.dto.MessageDto;
 
 /**
  * @author caizj
@@ -12,11 +11,12 @@ import com.ipampas.example.model.dto.response.SendMessageResponse;
 public interface MessageService {
 
     /**
-     * 发送信息（微信 短信 邮件）
+     * 发送信息
      *
      * @param messageDto
+     * @return
      */
-    SendMessageResponse send(MessageDto messageDto);
+    Integer send(MessageDto messageDto);
 
     /**
      * 定时任务事实发送信息

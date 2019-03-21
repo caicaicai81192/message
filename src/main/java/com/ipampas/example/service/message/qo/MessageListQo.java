@@ -1,4 +1,4 @@
-package com.ipampas.example.model.qo;
+package com.ipampas.example.service.message.qo;
 
 import lombok.*;
 

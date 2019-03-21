@@ -1,18 +1,16 @@
-package com.ipampas.example.service.impl;
+package com.ipampas.example.service.message.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.ipampas.example.enums.MessageStatusEnum;
 import com.ipampas.example.enums.MessageTypeEnum;
 import com.ipampas.example.manager.MessageManager;
 import com.ipampas.example.manager.MessageTemplateManager;
-import com.ipampas.example.model.dto.MessageDto;
-import com.ipampas.example.model.dto.response.SendMessageResponse;
+import com.ipampas.example.service.message.dto.MessageDto;
 import com.ipampas.example.dao.entity.Message;
 import com.ipampas.example.dao.entity.MessageTemplate;
-import com.ipampas.example.model.qo.MessageListQo;
-import com.ipampas.example.service.MessageService;
+import com.ipampas.example.service.message.qo.MessageListQo;
+import com.ipampas.example.service.message.MessageService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -24,7 +22,6 @@ import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -44,38 +41,14 @@ public class MessageServiceImpl implements MessageService {
     private JavaMailSender javaMailSender;
 
     @Override
-    public SendMessageResponse send(MessageDto messageDto) {
-        SendMessageResponse sendMessageResponse = new SendMessageResponse();
+    public Integer send(MessageDto messageDto) {
         //
-        if (Objects.isNull(messageDto)) {
-            sendMessageResponse.setErrorNo(1);
-            sendMessageResponse.setErrorInfo("messageDto must not be null");
-            return sendMessageResponse;
-        }
-        if (Objects.isNull(messageDto.getMessageTypeEnum())) {
-            sendMessageResponse.setErrorNo(1);
-            sendMessageResponse.setErrorInfo("type must not be null");
-            return sendMessageResponse;
-        }
-        if (CollectionUtils.isEmpty(messageDto.getTargetList())) {
-            sendMessageResponse.setErrorNo(1);
-            sendMessageResponse.setErrorInfo("targetList must not be empty");
-            return sendMessageResponse;
-        }
-        if (StringUtils.isBlank(messageDto.getTemplate())) {
-            sendMessageResponse.setErrorNo(1);
-            sendMessageResponse.setErrorInfo("template must not be null or empty");
-            return sendMessageResponse;
-        }
+        Assert.notNull(messageDto, "messageDto must not be null");
+        Assert.notNull(messageDto.getMessageTypeEnum(), "type must not be null");
+        Assert.notEmpty(messageDto.getTargetList(), "targetList must not be empty");
+        Assert.hasText(messageDto.getTemplate(), "template must not be null or empty");
         //
-        String content;
-        try {
-            content = this.createMessageContent(messageDto);
-        } catch (Exception e) {
-            sendMessageResponse.setErrorNo(1);
-            sendMessageResponse.setErrorInfo(e.getMessage());
-            return sendMessageResponse;
-        }
+        String content = this.createMessageContent(messageDto);
         //
         Message message = new Message();
         BeanUtils.copyProperties(messageDto, message);
@@ -85,9 +58,7 @@ public class MessageServiceImpl implements MessageService {
         message.setType(messageDto.getMessageTypeEnum().getCode());
         message.setSendTime(Optional.ofNullable(messageDto.getSendTime()).orElse(new Date()));
         //
-        messageManager.create(message);
-        //
-        return sendMessageResponse;
+        return messageManager.create(message);
     }
 
     @Override
