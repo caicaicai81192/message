@@ -79,7 +79,6 @@
         </dependency>
     </dependencies>
 
-
     <repositories>
         <repository>
             <id>nexus</id>
