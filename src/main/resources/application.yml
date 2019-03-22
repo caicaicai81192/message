@@ -1,0 +1,20 @@
+server:
+  port: 8888
+
+spring:
+  profiles:
+    active: local
+  flyway:
+    enabled: false
+
+---
+spring:
+  profiles: local
+  datasource:
+    url: jdbc:mysql://10.10.100.56:3306/qianniu3_dev?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&allowMultiQueries=true
+    username: root
+    password: 123456
+  mail:
+    host: smtp.ipampas.com
+    username: delivery@ipampas.com
+    password: yBPVRCN1Oz1z
