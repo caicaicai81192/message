@@ -10,6 +10,8 @@ import com.ipampas.example.dao.entity.Message;
 import com.ipampas.example.dao.entity.MessageTemplate;
 import com.ipampas.example.service.message.qo.MessageListQo;
 import com.ipampas.example.service.message.MessageService;
+import com.ipampas.framework.support.exception.PpsException;
+import com.ipampas.framework.support.exception.SysExceptions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.mail.MailException;
@@ -42,23 +44,28 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Integer send(MessageDto messageDto) {
-        //
-        Assert.notNull(messageDto, "messageDto must not be null");
-        Assert.notNull(messageDto.getMessageTypeEnum(), "type must not be null");
-        Assert.notEmpty(messageDto.getTargetList(), "targetList must not be empty");
-        Assert.hasText(messageDto.getTemplate(), "template must not be null or empty");
-        //
-        String content = this.createMessageContent(messageDto);
-        //
-        Message message = new Message();
-        BeanUtils.copyProperties(messageDto, message);
-        message.setTargets(JSON.toJSONString(messageDto.getTargetList()));
-        message.setContent(content);
-        message.setStatus(MessageStatusEnum.UNSENT.getCode());
-        message.setType(messageDto.getMessageTypeEnum().getCode());
-        message.setSendTime(Optional.ofNullable(messageDto.getSendTime()).orElse(new Date()));
-        //
-        return messageManager.create(message);
+        try {
+            //
+            Assert.notNull(messageDto, "messageDto must not be null");
+            Assert.notNull(messageDto.getMessageTypeEnum(), "type must not be null");
+            Assert.notEmpty(messageDto.getTargetList(), "targetList must not be empty");
+            Assert.hasText(messageDto.getTemplate(), "template must not be null or empty");
+            //
+            String content = this.createMessageContent(messageDto);
+            //
+            Message message = new Message();
+            BeanUtils.copyProperties(messageDto, message);
+            message.setTargets(JSON.toJSONString(messageDto.getTargetList()));
+            message.setContent(content);
+            message.setStatus(MessageStatusEnum.UNSENT.getCode());
+            message.setType(messageDto.getMessageTypeEnum().getCode());
+            message.setSendTime(Optional.ofNullable(messageDto.getSendTime()).orElse(new Date()));
+            //
+            return messageManager.create(message);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw PpsException.biz(SysExceptions.SYSTEM_EXCEPTION).message(e.getMessage()).build();
+        }
     }
 
     @Override
