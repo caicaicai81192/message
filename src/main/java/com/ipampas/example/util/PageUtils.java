@@ -3,6 +3,7 @@ package com.ipampas.example.util;
 
 import com.ipampas.framework.model.Page;
 import com.ipampas.framework.model.pageable.PageResult;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -35,7 +36,7 @@ public class PageUtils {
 
 
     public static <T, R> PageResult<R> transToPageResult(List<T> list, Function<? super T, ? extends R> mapper) {
-        if (null == list || CollectionsTools.isEmpty(list)) {
+        if (null == list || CollectionUtils.isEmpty(list)) {
             return emptyPageResult();
         }
         Page<T> page = transToPage(list);
@@ -48,7 +49,7 @@ public class PageUtils {
 
 
     public static <T, R> PageResult<R> transToPageResult(List<T> list) {
-        if (null == list || CollectionsTools.isEmpty(list)) {
+        if (null == list || CollectionUtils.isEmpty(list)) {
             return emptyPageResult();
         }
         Page<T> page = transToPage(list);

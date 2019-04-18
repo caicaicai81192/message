@@ -3,7 +3,7 @@ package com.ipampas.example.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang.StringUtils;
+import org.springframework.util.StringUtils;
 
 /**
  * @author caizj
@@ -25,11 +25,11 @@ public enum MessageTypeEnum {
     private String name;
 
     public static MessageTypeEnum getMessageTypeEnumByCode(String code) {
-        if (StringUtils.isEmpty(code)) {
+        if (!StringUtils.hasText(code)) {
             return NULL;
         }
         for (MessageTypeEnum item : MessageTypeEnum.values()) {
-            if (StringUtils.equals(item.getCode(), code)) {
+            if (item.code.equals(code)) {
                 return item;
             }
         }
