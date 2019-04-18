@@ -29,7 +29,7 @@ public class SpringContextUtils implements ApplicationContextAware {
 
     public static <T> T getBean(Class<T> clazz) {
         return Optional.ofNullable(applicationContext)
-                .map(applicationContext -> applicationContext.getBean(clazz)).get();
+                .map(applicationContext -> applicationContext.getBean(clazz)).orElseGet(null);
     }
 
 }
